@@ -1,0 +1,7 @@
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\obj\Debug\Pulsaciones2020.csprojAssemblyReference.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\obj\Debug\Pulsaciones2020.csproj.CoreCompileInputs.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\bin\Debug\Pulsaciones2020.exe.config
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\bin\Debug\Pulsaciones2020.exe
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\bin\Debug\Pulsaciones2020.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\obj\Debug\Pulsaciones2020.exe
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsaciones2020\obj\Debug\Pulsaciones2020.pdb

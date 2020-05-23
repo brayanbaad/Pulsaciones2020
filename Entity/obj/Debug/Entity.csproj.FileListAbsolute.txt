@@ -1,0 +1,12 @@
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\bin\Debug\Entity.dll
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\bin\Debug\Entity.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\obj\Debug\Entity.csprojAssemblyReference.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\obj\Debug\Entity.dll
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Entity\obj\Debug\Entity.pdb
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\bin\Debug\Entity.dll
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\bin\Debug\Entity.pdb
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\obj\Debug\Entity.csprojAssemblyReference.cache
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\obj\Debug\Entity.dll
+C:\Users\Acuña Donado\Documents\Anya\Pulsaciones2020\Entity\obj\Debug\Entity.pdb

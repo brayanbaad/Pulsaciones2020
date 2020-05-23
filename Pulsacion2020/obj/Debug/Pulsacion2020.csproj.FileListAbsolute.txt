@@ -1,0 +1,14 @@
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\obj\Debug\Pulsacion2020.csprojAssemblyReference.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\obj\Debug\Pulsacion2020.csproj.CoreCompileInputs.cache
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\Pulsacion2020.exe.config
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\Pulsacion2020.exe
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\Pulsacion2020.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\BLL.dll
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\Entity.dll
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\DAL.dll
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\BLL.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\Entity.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\bin\Debug\DAL.pdb
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\obj\Debug\Pulsacion2020.csproj.CopyComplete
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\obj\Debug\Pulsacion2020.exe
+C:\Users\Acuña Donado\source\repos\Pulsaciones2020\Pulsacion2020\obj\Debug\Pulsacion2020.pdb
