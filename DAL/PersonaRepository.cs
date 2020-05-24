@@ -108,6 +108,7 @@ namespace DAL
                     Persona persona = new Persona();
                     persona = Mapear(Reader);
                       personas.Add(persona);
+
                 }
             }
                 return personas;
