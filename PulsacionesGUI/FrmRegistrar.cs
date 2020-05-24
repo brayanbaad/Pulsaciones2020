@@ -89,6 +89,8 @@ namespace PulsacionesGUI
                     {
                         string mensaje = personaService.Eliminar(identificacion);
                         MessageBox.Show(mensaje, "Mesaje de Eliminacion", MessageBoxButtons.OKCancel);
+                        Limpiar();
+
                     }
                     else
                     {
@@ -102,6 +104,7 @@ namespace PulsacionesGUI
                     TxtIdentificacion.Focus();
                 }
             }
+
             else
             {
                 MessageBox.Show($" Digite la identificacion por favor ");
@@ -136,7 +139,7 @@ namespace PulsacionesGUI
                     var respuestaa = MessageBox.Show("Esta seguro que desea modificar al usuario?", "", MessageBoxButtons.YesNo);
                     if (respuestaa == DialogResult.Yes)
                     {
-                        string mensaje = personaService.ModificarEnArchivo(respuesta.persona);
+                        string mensaje = personaService.Modificar(respuesta.persona);
                         MessageBox.Show(mensaje, "Mensaje de Modificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Limpiar();
                     }

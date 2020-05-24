@@ -5,52 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 using Entity;
 using DAL;
+using System.Data.SqlClient;
 
 
 namespace BLL
 {
     public class PersonaService
     {
-        private PersonaRepository personaRepository;
+        SqlConnection connection;
+        string CadenaConexion = @"Data Source=SERVIDOR\SQLEXPRESS;Initial Catalog=BDPulsacion2020;Integrated Security=True";
+        PersonaRepository personaRepository;
+        
+       
 
 
         public PersonaService()
         {
-            personaRepository = new PersonaRepository();
+            connection = new SqlConnection(CadenaConexion);
+            personaRepository = new PersonaRepository(connection);
         }
 
-        public void CalcularPulsacion(Persona persona)
-        {
-            if (persona.Sexo.ToUpper().Equals('F'))
-            {
-                persona.Pulsacion = (220 - persona.Edad) / 10;
-            }
-            else
-            {
 
-                persona.Pulsacion = (210 - persona.Edad) / 10;
-
-            }
-
-        }
 
         public string Guardar(Persona persona)
         {
             try
             {
-                if (personaRepository.Buscar(persona.Identificacion) == null)
-                {
-                    personaRepository.Guardar(persona);
-                    return $"Los datos de la persona {persona.Nombre} han sido guardados satiafactoriamente";
-                }
-                else
-                {
-                    return $"Lo sentimos, los datos de {persona.Nombre} ya se encuantran registrados";
-                }
+                connection.Open();
+                personaRepository.Guardar(persona);
+                return $"Los datos de la persona {persona.Nombre} han sido guardados satiafactoriamente";
+
+
             }
             catch (Exception e)
             {
-                return $"Error de la aplicacion: {e.Message}";
+                return $"Error de base de datos: {e.Message}";
+            }
+            finally
+            {
+                connection.Close();
             }
 
 
@@ -61,51 +54,40 @@ namespace BLL
             RespuestaConsultar respuesta = new RespuestaConsultar();
             try
             {
+                connection.Open();
                 respuesta.Error = false;
+                respuesta.personas = new List<Persona>();
                 respuesta.personas = personaRepository.Consultar();
-                if (respuesta.personas!=null)
-                {
-                    respuesta.Mensaje = "Se consulta la informacion de personas";
-                }
-                else
-                {
-                    respuesta.Mensaje = "No existen datos para consultar";
-                }
+                connection.Close();
+                return respuesta;
 
             }
             catch (Exception e)
             {
                 respuesta.Error = true;
-                respuesta.Mensaje = $"error de datos"+e.Message;
+                respuesta.Mensaje = $"error de datos" + e.Message;
 
             }
-            return respuesta;
+            return null;
         }
 
-        public  RespuestaBusqueda Buscar(string identificacion)
+        public RespuestaBusqueda Buscar(string identificacion)
         {
             RespuestaBusqueda respuesta = new RespuestaBusqueda();
             try
             {
+                connection.Open();
                 respuesta.Error = false;
                 respuesta.persona = personaRepository.Buscar(identificacion);
-                if (respuesta.persona!=null)
-                {
-                    respuesta.Mensaje = "Se consultaron los datos satisfariamente";
-                }
-                else
-                {
-                    respuesta.Mensaje = "La persona solicitada no existe";
-                }
+                connection.Close();
                 return respuesta;
             }
             catch (Exception e)
             {
                 respuesta.Error = true;
                 respuesta.Mensaje = "error de datos" + e.Message;
-                respuesta.persona = null;
-                return respuesta;
             }
+            return null;
         }
 
 
@@ -114,43 +96,43 @@ namespace BLL
         {
             try
             {
-                Persona persona = personaRepository.Buscar(identificacion);
-
-                if (persona != null)
-                {
-                    personaRepository.Eliminar(persona);
-                    return $"Los datos de la persona {persona.Nombre} han sido eliminados satiafactoriamente";
-                }
-                else
-                {
-                    return $"Lo sentimos, los datos de {persona.Nombre} no se encuantran registrados";
-                }
+                connection.Open();
+                    personaRepository.Eliminar(identificacion);
+                    return $"Los datos de la persona han sido eliminados satiafactoriamente";
+                
+               
             }
             catch (Exception e)
             {
                 return $"Error de la aplicacion: {e.Message}";
             }
+            finally
+            {
+                connection.Close();
+            }
         }
 
 
-        public string ModificarEnArchivo(Persona persona)
+        public string Modificar(Persona persona)
 
         {
-            PersonaRepository personaRepository = new PersonaRepository();
-            Persona persona1 = new Persona();
-            persona1 = personaRepository.Buscar(persona.Identificacion);
-
-            if (persona1 != null)
+            try
             {
-                persona1.Identificacion = persona.Identificacion;
-                persona1.Nombre = persona.Nombre;
-                persona1.Edad = persona.Edad;
-                persona1.Sexo = persona.Sexo;
-                personaRepository.ModificarEnArchivo(persona);
-                return $"La persona se ha modificado correctamente";
-            }
+                connection.Open();
+                personaRepository.Modificar(persona);
+                connection.Close();
 
-            return $"La persona no se encuentra registrada";
+                return "Registro Modificado correctamente";
+            }
+            catch (Exception e)
+            {
+
+                return $"Error de base de datos {e.Message.ToString()}";
+            }
+            finally
+            {
+                connection.Close();
+            }
 
         }
 
@@ -189,7 +171,7 @@ namespace BLL
                     respuesta.Mensaje = "No hay datos, no se puede encontrar cuantps tipos hay";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 respuesta.Error = true;
