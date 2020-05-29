@@ -9,17 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entity;
 using BLL;
+using System.Configuration;
 
 namespace PulsacionesGUI
 {
     public partial class FrmConsultar : Form
     {
-
+        IList<Persona> personas = new List<Persona>();
         PersonaService personaService;
         public FrmConsultar()
         {
+
             InitializeComponent();
-            personaService = new PersonaService();
+            
+            personaService = new PersonaService(ConfigConnection.connectionString);
+            
         }
 
         private void BtnActualizar_Click(object sender, EventArgs e)
@@ -39,16 +43,16 @@ namespace PulsacionesGUI
             if (CmbFiltro.Text.Equals("Todos"))
             {
                 DtgPersonas.DataSource = null;
-                RespuestaConsultar respuesta = new RespuestaConsultar();
-                RespuestaTotal total = new RespuestaTotal();
-                respuesta = personaService.Consultar();
-                DtgPersonas.DataSource = respuesta.personas;
-                 total= personaService.TotalPersonas() ;
-                TxtPersonas.Text = total.Total.ToString();
-                total = personaService.Totaltipo("M");
-                TxtHombres.Text = total.Total.ToString();
-               total = personaService.Totaltipo("F");
-                TxtMujeres.Text = total.Total.ToString();
+                personas.Clear();
+                personas = personaService.Consultar();
+                DtgPersonas.DataSource = personas;
+                //RespuestaTotal total = new RespuestaTotal();
+                // total= personaService.TotalPersonas();
+                //TxtPersonas.Text = total.Total.ToString();
+                // total = personaService.Totaltipo("M");
+                // TxtHombres.Text = total.Total.ToString();
+                //total = personaService.Totaltipo("F");
+                // TxtMujeres.Text = total.Total.ToString();
             }
             else if (CmbFiltro.Text.Equals("M"))
             {

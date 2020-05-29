@@ -12,17 +12,20 @@ namespace BLL
 {
     public class PersonaService
     {
-        SqlConnection connection;
-        string CadenaConexion = @"Data Source=SERVIDOR\SQLEXPRESS;Initial Catalog=BDPulsacion2020;Integrated Security=True";
-        PersonaRepository personaRepository;
         
-       
+        private ConnectionManager conexion;
+         private PersonaRepository personaRepository;
+        List<Persona> personas;
+        Persona persona;
 
 
-        public PersonaService()
+
+        
+        public PersonaService(string cadenaconexion)
         {
-            connection = new SqlConnection(CadenaConexion);
-            personaRepository = new PersonaRepository(connection);
+            
+            conexion = new ConnectionManager(cadenaconexion);
+            personaRepository = new PersonaRepository(conexion);
         }
 
 
@@ -31,7 +34,7 @@ namespace BLL
         {
             try
             {
-                connection.Open();
+                conexion.Open();
                 personaRepository.Guardar(persona);
                 return $"Los datos de la persona {persona.Nombre} han sido guardados satiafactoriamente";
 
@@ -43,49 +46,48 @@ namespace BLL
             }
             finally
             {
-                connection.Close();
+                conexion.Close();
             }
 
 
         }
 
-        public RespuestaConsultar Consultar()
+        public List<Persona> Consultar()
         {
-            RespuestaConsultar respuesta = new RespuestaConsultar();
             try
             {
-                connection.Open();
-                respuesta.Error = false;
-                respuesta.personas = new List<Persona>();
-                respuesta.personas = personaRepository.Consultar();
-                connection.Close();
-                return respuesta;
+                conexion.Open();
+                personas = new List<Persona>();
+
+                personas = personaRepository.Consultar();
+                conexion.Close();
+                return personas;
 
             }
             catch (Exception e)
             {
-                respuesta.Error = true;
-                respuesta.Mensaje = $"error de datos" + e.Message;
+              
+                 string Mensaje = $"error de datos" + e.Message;
 
             }
             return null;
         }
 
-        public RespuestaBusqueda Buscar(string identificacion)
+        public Persona Buscar(string identificacion)
         {
-            RespuestaBusqueda respuesta = new RespuestaBusqueda();
+           
             try
             {
-                connection.Open();
-                respuesta.Error = false;
-                respuesta.persona = personaRepository.Buscar(identificacion);
-                connection.Close();
-                return respuesta;
+                Persona persona = new Persona();
+                persona = personaRepository.Buscar(identificacion);
+                conexion.Close();
+                return persona;
             }
             catch (Exception e)
             {
-                respuesta.Error = true;
-                respuesta.Mensaje = "error de datos" + e.Message;
+
+                
+                string Mensaje = "error de datos" + e.Message;
             }
             return null;
         }
@@ -96,7 +98,7 @@ namespace BLL
         {
             try
             {
-                connection.Open();
+                conexion.Open();
                     personaRepository.Eliminar(identificacion);
                     return $"Los datos de la persona han sido eliminados satiafactoriamente";
                 
@@ -108,8 +110,7 @@ namespace BLL
             }
             finally
             {
-                connection.Close();
-            }
+                conexion.Close();            }
         }
 
 
@@ -118,9 +119,9 @@ namespace BLL
         {
             try
             {
-                connection.Open();
+                conexion.Open();
                 personaRepository.Modificar(persona);
-                connection.Close();
+                
 
                 return "Registro Modificado correctamente";
             }
@@ -131,7 +132,7 @@ namespace BLL
             }
             finally
             {
-                connection.Close();
+                conexion.Close();
             }
 
         }

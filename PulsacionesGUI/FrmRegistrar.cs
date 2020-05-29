@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Entity;
 using BLL;
 
+
 namespace PulsacionesGUI
 {
     public partial class FrmRegistrar : Form
@@ -19,9 +20,11 @@ namespace PulsacionesGUI
         public FrmRegistrar()
         {
             InitializeComponent();
-            personaService = new PersonaService();
+            
+            personaService = new PersonaService(ConfigConnection.connectionString);
+            
         }
-
+       
         private void BtnAgragr_Click(object sender, EventArgs e)
         {
             Persona persona = new Persona();
@@ -52,18 +55,18 @@ namespace PulsacionesGUI
 
             if (identificacion != "")
             {
-                RespuestaBusqueda respuesta = new RespuestaBusqueda();
-                respuesta = personaService.Buscar(identificacion);
-                if (respuesta.persona != null)
+                
+                  Persona persona= personaService.Buscar(identificacion);
+                if (persona != null)
                 {
-                    TxtNombre.Text = respuesta.persona.Nombre;
-                    TxtEdad.Text = respuesta.persona.Edad.ToString();
-                    CmbGenero.Text = respuesta.persona.Sexo;
-                    TxtPulsacion.Text = respuesta.persona.Pulsacion.ToString();
+                    TxtNombre.Text = persona.Nombre;
+                    TxtEdad.Text = persona.Edad.ToString();
+                    CmbGenero.Text = persona.Sexo;
+                    TxtPulsacion.Text = persona.Pulsacion.ToString();
                 }
                 else
                 {
-                    MessageBox.Show(respuesta.Mensaje);
+                    MessageBox.Show("la persona no se encuentra en el sistema");
                     
                 }
             }
@@ -80,9 +83,9 @@ namespace PulsacionesGUI
             string identificacion = TxtIdentificacion.Text;
             if (identificacion != "")
             {
-                RespuestaBusqueda respuesta = new RespuestaBusqueda();
-                respuesta = personaService.Buscar(identificacion);
-                if (respuesta.persona != null)
+
+                Persona persona = personaService.Buscar(identificacion);
+                if (persona != null)
                 {
                     var respuestaa = MessageBox.Show("Esta seguro que desea eliminar esta persona?", "", MessageBoxButtons.YesNo);
                     if (respuestaa == DialogResult.Yes)
@@ -100,15 +103,9 @@ namespace PulsacionesGUI
                 }
                 else
                 {
-                    MessageBox.Show(respuesta.Mensaje);
+                    MessageBox.Show($" Digite la identificacion por favor ");
                     TxtIdentificacion.Focus();
                 }
-            }
-
-            else
-            {
-                MessageBox.Show($" Digite la identificacion por favor ");
-                TxtIdentificacion.Focus();
             }
         }
 
@@ -127,29 +124,25 @@ namespace PulsacionesGUI
             string identificacion = TxtIdentificacion.Text;
             if (identificacion!="")
             {
-                RespuestaBusqueda respuesta = new RespuestaBusqueda();
-                respuesta = personaService.Buscar(identificacion);
-                if (respuesta.persona != null)
+                
+                Persona persona = personaService.Buscar(identificacion);
+                if (persona != null)
                 {
-                    respuesta.persona.Nombre = TxtNombre.Text;
-                    respuesta.persona.Edad = Convert.ToInt32(TxtEdad.Text);
-                    respuesta.persona.Sexo = CmbGenero.Text;
-                    respuesta.persona.CalcularPulsaciones();
-                    TxtPulsacion.Text = respuesta.persona.Pulsacion.ToString();
+                    persona.Nombre = TxtNombre.Text;
+                    persona.Edad = Convert.ToInt32(TxtEdad.Text);
+                    persona.Sexo = CmbGenero.Text;
+                    persona.CalcularPulsaciones();
+                    TxtPulsacion.Text =persona.Pulsacion.ToString();
                     var respuestaa = MessageBox.Show("Esta seguro que desea modificar al usuario?", "", MessageBoxButtons.YesNo);
                     if (respuestaa == DialogResult.Yes)
                     {
-                        string mensaje = personaService.Modificar(respuesta.persona);
+                        string mensaje = personaService.Modificar(persona);
                         MessageBox.Show(mensaje, "Mensaje de Modificacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Limpiar();
                     }
 
                 }
-                else
-                {
-                    MessageBox.Show(respuesta.Mensaje);
-
-                }
+                
 
             }
             else

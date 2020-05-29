@@ -13,19 +13,19 @@ namespace DAL
 {
     public class PersonaRepository
     {
-        SqlConnection connection;
+        SqlConnection conexion;
         
         List<Persona> personas;
 
-        public PersonaRepository(SqlConnection connectionDb)
+        public PersonaRepository( ConnectionManager connection)
         {
-            connection = connectionDb;
+            conexion = connection.connection;
             personas = new List<Persona>();
         }
 
         public void Guardar (Persona persona)
         {
-            using (var comando = connection.CreateCommand())
+            using (var comando = conexion.CreateCommand())
             {
                 comando.CommandText = " Insert  Into Persona(Identificacion,Nombre,Edad,Sexo,Pulsacion)" +
                     "Values(@identificacion,@Nombre,@Edad,@Sexo,@Pulsacion)";
@@ -41,7 +41,7 @@ namespace DAL
 
         public Persona Buscar(string identificacion)
         {
-            using (var Comando = connection.CreateCommand())
+            using (var Comando = conexion.CreateCommand())
             {
                 Comando.CommandText = "Select * from Persona where Identificacion =@identificacion";
                 Comando.Parameters.AddWithValue("@Identificacion", identificacion);
@@ -52,7 +52,7 @@ namespace DAL
                     {
                         Persona persona = new Persona();
                         persona = Mapear(Reader);
-                        return Mapear(Reader);
+                        return persona;
                     }
                 }
             }
@@ -63,6 +63,8 @@ namespace DAL
         {
             personas = Consultar();
             return personas.Count();
+
+
         }
 
         //public int TotalMujeres()
@@ -90,7 +92,7 @@ namespace DAL
         //    personas = ConsultaGeneral();
         //    return personas.Where(p => p.Sexo.Equals("F")).ToList();
         //}
-        public IList<Persona> listarTipo(string tipo)
+        public List<Persona> listarTipo(string tipo)
         {
             personas = Consultar();
             return personas.Where(p => p.Sexo.Equals(tipo)).ToList();
@@ -99,7 +101,7 @@ namespace DAL
         public List<Persona> Consultar()
         {
             personas.Clear();
-            using (var comando = connection.CreateCommand())
+            using (var comando = conexion.CreateCommand())
             {
                 comando.CommandText = "Select * from Persona";
                 var Reader = comando.ExecuteReader();
@@ -127,7 +129,7 @@ namespace DAL
 
         public void Eliminar(string identificacion)
         {
-            using(var comando = connection.CreateCommand()){
+            using(var comando = conexion.CreateCommand()){
                 comando.CommandText = "Delete from Persona where identificacion = @Identificacion";
                 comando.Parameters.AddWithValue("@Identificacion", identificacion);
                 comando.ExecuteNonQuery();
@@ -138,7 +140,7 @@ namespace DAL
         public void Modificar(Persona persona)
         {
 
-            using (var comando = connection.CreateCommand())
+            using (var comando = conexion.CreateCommand())
             {
                 comando.CommandText = "Update Persona set  nombre=@nombre,edad=@edad,sexo=@sexo,pulsacion=@pulsacion where identificacion = @Identificacion";
                 comando.Parameters.AddWithValue("@Identificacion", persona.Identificacion);
